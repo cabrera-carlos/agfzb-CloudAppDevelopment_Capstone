@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                  <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+            </div>
+        </div>
+    </nav>
+<br>
+    <div class="card card-text style="width: 28rem;">
+        <div class="card-body">
+          <h5 class="card-title">Contact Us</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Address: 123 Main ST Somecity NY, 99999</li>
+            <li class="list-group-item">Phone: +1 (800)-123-4789</li>
+          </ul>
+          <a href="{% url 'djangoapp:index' %}" class="btn btn-primary">Back</a>
+        </div>
+      </div>
+
+</body>
+
+</html>
