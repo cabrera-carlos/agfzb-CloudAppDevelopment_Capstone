@@ -78,9 +78,9 @@
     <!-- Main section -->
     <div class="col-lg-3 mx-auto p-3 py-md-5">
         <main class="form-signin">
-            <form action="{% url 'djangoapp:registration' %}" method="post">
+            <form action="{% url 'djangoapp:login' %}" method="post">
                 {% csrf_token %}
-                <h1 class="h3 mb-3 fw-normal">Sign Up</h1>
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
                 
                 {% if message %}
                 <div class="alert alert-warning">
@@ -88,18 +88,16 @@
                 </div>
                 {% endif %}
 
-                <div class="form-group"> <!--Style second div with .form-group class -->
-                    <label for="username"><b>User Name</b></label>
-                    <input type="text" class="form-control" placeholder="Enter User Name: " name="username" required> <!--Style input with .form-control class -->
-                    <label for="firstname"><b>First Name</b></label>
-                    <input type="text" class="form-control" placeholder="Enter First Name: " name="firstname" required> <!--Style input with .form-control class -->
-                    <label for="lastname"><b>Last Name</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Last Name: " name="lastname" required> <!--Style input with .form-control class -->
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" class="form-control" placeholder="Enter Password: " name="psw" required> <!--Style input with .form-control class -->
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="username" placeholder="username">
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" name="psw" placeholder="Password">
+                    <label for="psw">Password</label>
                 </div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
             </form>
             
             <p class="mt-5 mb-3 text-muted text-center">&copy; 2022 - Carlos Cabrera</p>
