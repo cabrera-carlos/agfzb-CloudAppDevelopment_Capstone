@@ -3,27 +3,139 @@
 
 <head>
     <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Dealership Review</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <style>
+        .icon-list {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .icon-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: .25rem;
+        }
+
+        .icon-list li::before {
+            display: block;
+            flex-shrink: 0;
+            width: 1.5em;
+            height: 1.5em;
+            margin-right: .5rem;
+            content: "";
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23212529' viewBox='0 0 16 16'%3E%3Cpath d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z'/%3E%3C/svg%3E") no-repeat center center / 100% auto;
+        }
+    </style>
+
 </head>
 
 <body>
-    <nav class="navbar navbar-light bg-light">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example">
         <div class="container-fluid">
-            <div class="navbar-header">
-                  <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Dealership Review</a>
+            <a class="navbar-brand" href="{% url 'djangoapp:login' %}">Best Cars Dealership</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02"
+                aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample02">
+                <ul class="navbar-nav me-auto">
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                        <a class="btn btn-link" href="">Logout</a>
+                    </li>
+                    {% else %}
+                    
+                        <form class="form-inline" action="" method="post">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Username" name="username" >
+                                <input type="password" class="form-control" placeholder="Password" name="psw" >
+                                <button class="btn btn-primary" type="submit">Login</button>
+                                <a class="btn btn-link" href="">Sign Up</a>
+                            </div>
+                        </form>
+                    
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </nav>
-<br>
-    <div class="card card-text style="width: 28rem;">
-        <div class="card-body">
-          <h5 class="card-title">About Us</h5>
-          <p class="card-text">Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at
-            reasonable prices.</p>
-          <a href="{% url 'djangoapp:index' %}" class="btn btn-primary">Back</a>
+
+    <!-- Main section -->
+    <div class="col-lg-8 mx-auto p-3 py-md-5">
+        <main>
+            <h1>About Us</h1>
+            <p class="fs-5 col-md-8">Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at
+              reasonable prices.</p>
+
+            
+            <hr class="col-3 col-md-2 mb-5">
+
+            <div class="mb-5">
+                <a href="{% url 'djangoapp:index' %}" class="btn btn-success btn-lg px-4">Go back</a>
+            </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div class="container">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                <p class="col-md-4 mb-0 text-muted">&copy; 2022 - Carlos Cabrera</p>
+
+                <a href="/"
+                    class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+
+                <ul class="nav col-md-4 justify-content-end">
+                    <li class="nav-item"><a href="{% url 'djangoapp:index' %}" class="nav-link px-2 text-muted">Home</a></li>
+                    <li class="nav-item"><a href="{% url 'djangoapp:contact' %}" class="nav-link px-2 text-muted">Contact</a></li>
+                    <li class="nav-item"><a href="{% url 'djangoapp:about' %}" class="nav-link px-2 text-muted">About</a></li>
+                </ul>
+            </footer>
         </div>
-      </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 </body>
 
