@@ -10,24 +10,18 @@
 from ibmcloudant.cloudant_v1 import CloudantV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_cloud_sdk_core import ApiException
-import requests
-import json
 
 
 def main(dict):
-    databaseName = "dealerships"
-
     authenticator = IAMAuthenticator(dict["IAM_API_KEY"])
     service = CloudantV1(authenticator=authenticator)
     service.set_service_url(dict["COUCH_URL"])
 
     try:
-        response = service.get_all_dbs().get_result()
+        response = service.post_document(db='reviews', document=dict["review"]).get_result()
+
+        return { "review": response}
+
     except ApiException as ae:
         print("Method failed")
-        print(" - status code: " + str(ae.code))
-        print(" - error message: " + ae.message)
-        if ("reason" in ae.http_response.json()):
-            print(" - reason: " + ae.http_response.json()["reason"])
-
-    return {"dbs": response}
+        return {"status code" : str(ae.code), "error message": ae.message}
