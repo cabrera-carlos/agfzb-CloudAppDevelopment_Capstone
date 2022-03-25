@@ -107,23 +107,48 @@ def get_dealers_by_state_from_cf(url, state):
 
     return results
 
+# Get dealer by ID from a cloud function
+def get_dealer_by_id_from_cf(url, dealerId):
+    # Call get_request with a URL parameter
+    json_result = get_request(url, dealerId=dealerId)
+    if json_result:
+        # Get the dealer document
+        dealer_doc = json_result["docs"][0]
+        # Create a CarDealer object with values in `doc` object
+        dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"],
+            full_name=dealer_doc["full_name"], id=dealer_doc["id"], lat=dealer_doc["lat"], 
+            long=dealer_doc["long"], short_name=dealer_doc["short_name"],
+            st=dealer_doc["st"], zip=dealer_doc["zip"])
+            
+    return dealer_obj
+
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
 def get_dealer_reviews_from_cf(url, dealerId):
     results = []
     # Call get_request with a URL parameter
     json_result = get_request(url, dealerId=dealerId)
-    if json_result:
+    if json_result and "docs" in json_result:
         # Get the docs list in JSON as dealers
         reviews = json_result["docs"]
         # For each review object
         for review_doc in reviews:
             # Create a DealerReview object with values in `doc` object
-            review_obj = DealerReview(dealership=review_doc["dealership"], name=review_doc["name"],purchase=review_doc["purchase"],
-                                        review=review_doc["review"], purchase_date=review_doc["purchase_date"], 
-                                        car_make=review_doc["car_make"], car_model=review_doc["car_model"],
-                                        car_year=review_doc["car_year"], id=review_doc["id"])
+            review_obj = DealerReview(dealership=review_doc["dealership"], name=review_doc["name"],         purchase=review_doc["purchase"], review=review_doc["review"], id=review_doc["id"])
             
-            # Get the sentiment from Watson NLU Service
+            # Get purchase information if available
+            if "purchase_date" in review_doc:
+                review_obj.purchase_date = review_doc["purchase_date"]
+            
+            if "car_make" in review_doc:
+                review_obj.car_make = review_doc["car_make"]
+
+            if "car_model" in review_doc:
+                review_obj.car_model = review_doc["car_model"]
+
+            if "car_year" in review_doc:
+                review_obj.car_year = review_doc["car_year"]
+
+            # Get the review's sentiment from Watson NLU Service
             review_obj.sentiment = analyze_review_sentiments(review_obj.review)
             
             results.append(review_obj)
@@ -148,7 +173,7 @@ def analyze_review_sentiments(text):
     # Get the sentiment label
     # If there is an error, return it formatted as a string
     if "error" in response:
-        return "Error: {}".format(response["error"])
+        return "neutral"
     else:
         text_sentiment = response["sentiment"]["document"]["label"]
         return text_sentiment
