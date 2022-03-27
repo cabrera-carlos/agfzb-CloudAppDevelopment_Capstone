@@ -1,4 +1,3 @@
-from ctypes.wintypes import VARIANT_BOOL
 from django.db import models
 from django.utils.timezone import now
 
