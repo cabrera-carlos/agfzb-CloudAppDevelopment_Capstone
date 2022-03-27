@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.8.2
 
 ENV PYTHONBUFFERED 1
 ENV PYTHONWRITEBYTECODE 1
@@ -21,7 +21,7 @@ COPY . $APP
 
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoint.sh
-ENTRYPOINT ["/app/entrypoint.sh"]
+# RUN chmod +x /app/entrypoint.sh
+# ENTRYPOINT ["/app/entrypoint.sh"]
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangobackend.wsgi"]
